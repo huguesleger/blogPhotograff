@@ -27,7 +27,7 @@
 
                 {#Barre de Nav avec Bootstrap#}
                 <div class="menu-nav">
-                    <nav id="nav" class="navbar navbar-default">
+                    <nav class="navbar navbar-default">
                         <div class="container-fluid">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -45,73 +45,73 @@
 
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav">
-                                    <li><a class="" href="{{path('home')}}">Accueil<span class="sr-only"></span></a></li>
-                                    <li><a class="" href="{{path('photo')}}">Photos</a></li>
-                                    <li><a class="" href="{{path('evenement')}}">Evènements</a></li>
-                                    {% if is_granted("ROLE_ADMIN") %}
-                                    <li><a class="" href="{{path('admin')}}">Mon espace personnel</a></li>
-                                    {% endif %}
-                                    {% if is_granted("ROLE_ADMIN") %}
-                                    <li class="connexion"><a class="" href="{{path('loginOut')}}">Déconnexion</a></li>
-                                    {% else %}
-                                    <li class="connexion"><a class="" href="{{path('login')}}">Connexion</a></li>
-                                    {% endif %}
+                                    <li><a href="{{path('home')}}">Accueil<span class="sr-only"></span></a></li>
+                                    <li><a href="{{path('photo')}}">Photos</a></li>
+                                    <li><a href="{{path('evenement')}}">Evènements</a></li>
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                        <li><a href="{{path('admin')}}">Mon espace personnel</a></li>
+                                        {% endif %}
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                        <li class="connexion"><a href="{{path('loginOut')}}">Déconnexion</a></li>
+                                        {% else %}
+                                        <li class="connexion"><a href="{{path('login')}}">Connexion</a></li>
+                                        {% endif %}
                                 </ul>
-                                
+
                             </div>
                         </div>
                     </nav>
                 </div>
                 {% block section %}
                     <div class="col-md-12 test1">
-                     {% for photos in annoncePhotos %}
-                         
-                <div class="col-sm-6 col-md-4 thumbHome">
-                    <div class="thumbnail">
-                        <img class="img-section" src="{{asset('uploads/images/')~photos.photo}}" class="img-responsive"/>
-                        <h2 class="title">{{photos.titre}}</h2>
-                        <p>{{photos.ville}}</p>
-                        <p>{{photos.appareilPhotoUtilise}}</p>
-                        <p>{{photos.commentaire| truncate(60, true, ' ...')}}</p>
-                        <p class="title"> {{photos.date|date('d/m/y')}} |</p>
-                        <p class="title">{{photos.auteur}}</p>
-                    </div>    
-                </div>
-                    
-                     
-                        
-                {% endfor %}
-                <a type="button" class="btn boutonHome" href="{{path('photo')}}">En voir plus...</a>
-                </div> 
-                <div class="col-md-12 test">
-                 {% for evenements in annonceEvent %}
-                     
-                    <div class="col-sm-6 col-md-4 thumbHome">
-                        <div class="thumbnail">
-                            <img class="img-section" src="{{asset('uploads/images/')~evenements.photo}}" class="img-responsive">  
-                            <h2 class="titleEvent">{{evenements.titre}} |</h2>
-                            <p class="info">{{evenements.ville}}</p>
-                            <p class="info">{{evenements.lieuxExposition}}</p>
-                            <p class="titleEvent"> {{evenements.date|date('d/m/y')}} |</p>
-                            <p class="titleEvent">{{evenements.auteur}}</p>
-                            <div class="comm_suite">
-                                <p class="commentaire">{{evenements.commentaire| truncate(60, true, ' ...')}}</p>
-                                <p class="suite"><a href="{{path('detailevenement', {'id':evenements.id})}}">Voir la suite</a></p>
+                        {% for photos in annoncePhotos %}
+
+                            <div class="col-sm-6 col-md-4 thumbHome">
+                                <div class="thumbnail">
+                                    <img class="img-section" src="{{asset('uploads/images/')~photos.photo}}" class="img-responsive"/>
+                                    <h2 class="title">{{photos.titre}}</h2>
+                                    <p>{{photos.ville}}</p>
+                                    <p>{{photos.appareilPhotoUtilise}}</p>
+                                    <p>{{photos.commentaire| truncate(60, true, ' ...')}}</p>
+                                    <p class="title"> {{photos.date|date('d/m/y')}} |</p>
+                                    <p class="title">{{photos.auteur}}</p>
+                                </div>    
                             </div>
 
-                        </div>
-                    </div>  
-                      
 
-                {% endfor %}
-                <a type="button" class="btn boutonHome" href="{{path('evenement')}}">En voir plus...</a>
-                </div>
+
+                        {% endfor %}
+                        <a type="button" class="btn boutonHome" href="{{path('photo')}}">En voir plus...</a>
+                    </div> 
+                    <div class="col-md-12 test">
+                        {% for evenements in annonceEvent %}
+
+                            <div class="col-sm-6 col-md-4 thumbHome">
+                                <div class="thumbnail">
+                                    <img class="img-section" src="{{asset('uploads/images/')~evenements.photo}}" class="img-responsive">  
+                                    <h2 class="titleEvent">{{evenements.titre}} |</h2>
+                                    <p class="info">{{evenements.ville}}</p>
+                                    <p class="info">{{evenements.lieuxExposition}}</p>
+                                    <p class="titleEvent"> {{evenements.date|date('d/m/y')}} |</p>
+                                    <p class="titleEvent">{{evenements.auteur}}</p>
+                                    <div class="comm_suite">
+                                        <p class="commentaire">{{evenements.commentaire| truncate(60, true, ' ...')}}</p>
+                                        <p class="suite"><a href="{{path('detailevenement', {'id':evenements.id})}}">Voir la suite</a></p>
+                                    </div>
+
+                                </div>
+                            </div>  
+
+
+                        {% endfor %}
+                        <a type="button" class="btn boutonHome" href="{{path('evenement')}}">En voir plus...</a>
+                    </div>
                 {% endblock %}
 
-                
-               
+
+
                 {#Footer avec les informations sur les dev#}
-                
+
                 <footer class="footer col-xs-12">
                     <div class="container">
                         <div class="credit">

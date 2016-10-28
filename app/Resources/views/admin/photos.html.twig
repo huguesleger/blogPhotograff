@@ -1,6 +1,6 @@
 {%extends ":admin:index.html.twig"%}
 
- 
+
 {% block body %}
     <div class="grouplienajout">
         <div class="div1">
@@ -9,12 +9,12 @@
             </div>
             <a class="lienajout" href="{{path("formphotos")}}"><h1>Ajouter un post</h1></a>
         </div>
-            <div class="div2">
-                <div class="icon">
-                    <i class="fa fa-thumb-tack"></i>
-                </div>
-                <a class="lienajout" href="{{path('photoBrou')}}"><h1>Mes brouillons</h1></a>
+        <div class="div2">
+            <div class="icon">
+                <i class="fa fa-thumb-tack"></i>
             </div>
+            <a class="lienajout" href="{{path('photoBrou')}}"><h1>Mes brouillons</h1></a>
+        </div>
     </div>
     <div class="container-fluid photo_event">
         <div class="row">
@@ -34,12 +34,10 @@
                         </div>
                     </div>    
                 </div>
-                         <script>
-        </script>
-                {% endfor %}
+            {% endfor %}
 
-            
+
         </div>
     </div>
-    
- {% endblock %}  
+
+{% endblock %}  

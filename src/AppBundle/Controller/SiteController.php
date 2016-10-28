@@ -19,6 +19,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @author hugues
  */
 class SiteController extends Controller {
+ 
+    
+    // on renvoi dans la vue coté utilisateur nos fonctions de adminController
     
     
 ///////////////////////// View User

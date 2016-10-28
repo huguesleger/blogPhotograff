@@ -50,6 +50,7 @@ class AdminController extends Controller {
    */
     public function getPhotos(){
      $em = $this->getDoctrine();
+     //ci publier est true alors on retourne le post dans annonce photo
         $photos = $em->getRepository("AppBundle:Photos")->findBy(array('publier' => '1'),
         //filtrage par date croissant
         array('date'=>'DESC'));
@@ -63,9 +64,11 @@ class AdminController extends Controller {
    * @param Request $request
    */
     public function formPhotos(Request $request){
+        // on creer notre objet Photos 
         $photos = new Photos();
+        // on lie notre formulaire a notre entity
         $f = $this->createForm(PhotosType::class, $photos);
-        
+         // et on retourne le formulaire dans notre vue
         return array("formphotos"=> $f->createView());
         
     }
@@ -75,19 +78,26 @@ class AdminController extends Controller {
    */
     public function addPhotos(Request $request){
         $annonce = new Photos();
+        
+        // on creer notre formulaire et on le persist avec notre objet
         $f = $this->createForm(PhotosType::class, $annonce);
+        // on verifie que la requette est bien de type post
         if ($request->getMethod() == 'POST'){
               $f->handleRequest($request);
+            // on recupere le nom du fichier, on genere un nom numerique aleatoire et on creer un dossier uploads/images 
             $nomDuFichier = md5(uniqid()).".".$annonce->getPhoto()->getClientOriginalExtension();
             $annonce->getPhoto()->move('uploads/images', $nomDuFichier);
             $annonce->setPhoto($nomDuFichier);
             $em = $this->getDoctrine()->getManager();
+            // on sauvegarde en local
             $em->persist($annonce);
+            // et on envoi en base de donnee
             $em->flush();
             
+            // ci ok on retourne dans la page photos
             return $this->redirectToRoute('annoncePhotos');
         }
-        
+            // sinon on reviens sur le formulaire
             return $this->redirectToRoute('formPhotos');
                            
     }
@@ -97,6 +107,8 @@ class AdminController extends Controller {
    * @Template(":admin:addPhotos.html.twig")
    */
     public function modifPhotos($id){
+        // on recupere par id l'entity photo pour la modifier
+        
         $em = $this->getDoctrine()->getManager();
         $annonce = $em->find('AppBundle:Photos', $id);
         $f = $this->createForm(PhotosType::class, $annonce);
@@ -104,10 +116,14 @@ class AdminController extends Controller {
         return array ('formphotos' => $f ->createView(), "id"=>$id);
     }
     
+ 
+    
+    
     /**
    * @Route("/admin/photos/delate/{id}", name="delatephotos")
    */
     public function delatePhotos($id){
+        // on recupere par id l'entity photo pour la supprimer
          $em = $this->getDoctrine()->getManager();
          $annonce = $em->find('AppBundle:Photos', $id);
          $em->remove($annonce);
@@ -120,6 +136,8 @@ class AdminController extends Controller {
    * @Route("/admin/photos/update/{id}", name="updatephotos")
    */
     public function updatePhotos(Request $request, $id){
+        // on recupere l'entity photo par l'id
+        
         $em = $this->getDoctrine()->getManager();
         $annonce = $em->find('AppBundle:Photos', $id);
         $f = $this->createForm(PhotosType::class, $annonce);
@@ -142,6 +160,7 @@ class AdminController extends Controller {
      */
     public function photoBrou() {
         $em = $this->getDoctrine();
+        //ci publier est false alors on retourne le post dans brouillons
         $annonce = $em->getRepository("AppBundle:Photos")->findBy(array('publier' => '0'),
                   //filtrage par date croissant
         array('date'=>'DESC'));
@@ -155,6 +174,7 @@ class AdminController extends Controller {
          $em = $this->getDoctrine()->getManager();
          $annonce = $em->find('AppBundle:Photos', $id);
          $this->createForm(PhotosType::class, $annonce);
+         //change le post de brouillons a publier
          $annonce->setPublier(1);
          $em->merge($annonce);
          $em->flush();
